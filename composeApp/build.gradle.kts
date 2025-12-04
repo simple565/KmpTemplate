@@ -38,12 +38,15 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(compose.components.uiToolingPreview)
-            implementation(compose.components.resources)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.material3AdaptiveNavigationSuite)
+            implementation(compose.materialIconsExtended)
+            implementation(compose.components.uiToolingPreview)
+            implementation(compose.components.resources)
             implementation(compose.runtime)
             implementation(compose.ui)
+            implementation(compose.uiUtil)
 
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -62,6 +65,10 @@ kotlin {
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+
+            implementation(libs.jetbrains.compose.material3.adaptive)
+
+            implementation(libs.jetbrains.navigation.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
