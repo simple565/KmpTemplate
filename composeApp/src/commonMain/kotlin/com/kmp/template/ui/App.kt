@@ -1,4 +1,4 @@
-package com.kmp.template
+package com.kmp.template.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

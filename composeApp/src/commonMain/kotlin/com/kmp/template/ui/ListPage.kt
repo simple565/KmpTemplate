@@ -1,4 +1,4 @@
-package com.kmp.template
+package com.kmp.template.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

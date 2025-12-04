@@ -1,4 +1,4 @@
-package com.kmp.template
+package com.kmp.template.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
