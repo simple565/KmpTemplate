@@ -1,11 +1,13 @@
 package com.kmp.template.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,6 +29,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
@@ -34,27 +38,25 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kmp.template.database.Room
+import com.kmp.template.ui.composable.AdaptiveDialog
 import kmptemplate.composeapp.generated.resources.Res
 import kmptemplate.composeapp.generated.resources.app_name
 import kmptemplate.composeapp.generated.resources.room_last_update_format
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.stringResource
 
 /**
  * @author Lian
  * @date 2025/12/3
  */
-@Serializable
-object ListPage
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListPage(
     onDetailClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RoomViewModel = viewModel()
+    viewModel: RoomViewModel = viewModel { RoomViewModel() }
 ) {
     val dataList by viewModel.roomList.collectAsStateWithLifecycle()
+    val showBottomSheet = remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier,
@@ -68,7 +70,7 @@ fun ListPage(
                 },
                 actions = {
                     IconButton(
-                        onClick = { viewModel.addRoom() },
+                        onClick = { showBottomSheet.value = true },
                         content = {
                             Icon(
                                 imageVector = Icons.Default.Add,
@@ -81,21 +83,48 @@ fun ListPage(
         }
     ) { padding ->
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 120.dp),
+            columns = GridCells.Adaptive(minSize = 140.dp),
             modifier = Modifier.padding(padding).fillMaxSize(),
             contentPadding = PaddingValues(horizontal = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(
-                12.dp,
-                alignment = Alignment.CenterHorizontally
-            ),
+            horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(items = dataList, key = { it.hashCode() }) {
                 RoomBriefInfoCard(
                     briefInfo = it,
-                    modifier = Modifier.aspectRatio(3.div(2F))
+                    modifier = Modifier.aspectRatio(3.div(2F)).combinedClickable(
+                        indication = null,
+                        interactionSource = null,
+                        onClick = { onDetailClick(it.toString()) },
+                        onLongClick = {
+
+                        }
+                    )
                 )
             }
+        }
+        if (showBottomSheet.value) {
+            AdaptiveDialog(
+                onDismissRequest = { showBottomSheet.value = false },
+                usePlatformDefaultWidth = false,
+                content = {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.95F),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Add,
+                            contentDescription = null,
+                            modifier = Modifier.size(64.dp)
+                        )
+                        Text(
+                            text = "Add Room",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+                }
+            )
         }
     }
 }
