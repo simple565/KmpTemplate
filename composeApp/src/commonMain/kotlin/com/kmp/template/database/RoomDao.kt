@@ -12,9 +12,9 @@ interface RoomDao {
     suspend fun insert(room: Room)
 
     @Query("SELECT * FROM room")
-    fun getAllAsFlow(): Flow<List<Room>>
+    fun getRoomList(): Flow<List<Room>>
 
     @Query("SELECT * FROM room WHERE id = :id")
-    suspend fun getRoom(id: Long): Room?
+    fun getRoom(id: Int): Flow<Room?>
 
 }

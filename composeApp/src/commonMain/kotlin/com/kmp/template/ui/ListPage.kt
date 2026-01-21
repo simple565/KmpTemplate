@@ -51,7 +51,7 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListPage(
-    onDetailClick: (String) -> Unit,
+    onDetailClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RoomViewModel = viewModel { RoomViewModel() }
 ) {
@@ -95,9 +95,9 @@ fun ListPage(
                     modifier = Modifier.aspectRatio(3.div(2F)).combinedClickable(
                         indication = null,
                         interactionSource = null,
-                        onClick = { onDetailClick(it.toString()) },
+                        onClick = { onDetailClick(it.id) },
                         onLongClick = {
-
+                            // TODO 删除编辑等更多操作菜单
                         }
                     )
                 )

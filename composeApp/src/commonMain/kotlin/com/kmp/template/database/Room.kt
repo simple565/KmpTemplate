@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "room")
 data class Room(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    val id: Int = 0,
     val name: String,
     val chartEmoji: String,
     val listColumnCount: Int,

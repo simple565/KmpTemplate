@@ -24,7 +24,7 @@ fun App() {
             }
             composable<DetailPage> {
                 DetailPage(
-                    detail = it.toRoute<DetailPage>().value,
+                    id = it.toRoute<DetailPage>().id,
                     onBackClick = navController::popBackStack,
                     modifier = Modifier.fillMaxSize()
                 )
