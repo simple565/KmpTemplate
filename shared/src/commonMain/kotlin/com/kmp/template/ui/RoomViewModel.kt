@@ -5,8 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.kmp.template.database.Room
 import com.kmp.template.di.DbHelper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -17,10 +21,22 @@ import kotlin.random.Random
  */
 class RoomViewModel : ViewModel() {
 
-    val roomList = DbHelper.instance.roomDao().getAllAsFlow()
+    private val _loadRoomIdState = MutableStateFlow(0)
+
+    val roomList = DbHelper.instance.roomDao().getRoomList()
+        .onCompletion { print("onCompletion: load room list") }
         .stateIn(
             scope = viewModelScope,
             initialValue = emptyList(),
+            started = SharingStarted.WhileSubscribed()
+        )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val room = _loadRoomIdState.flatMapLatest { DbHelper.instance.roomDao().getRoom(it) }
+        .onCompletion { print("onCompletion: load room") }
+        .stateIn(
+            scope = viewModelScope,
+            initialValue = null,
             started = SharingStarted.WhileSubscribed()
         )
 
@@ -35,5 +51,9 @@ class RoomViewModel : ViewModel() {
             updateTime = "",
         )
         DbHelper.instance.roomDao().insert(room)
+    }
+
+    fun loadRoom(id: Int) {
+        _loadRoomIdState.value = id
     }
 }

@@ -38,10 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kmp.template.database.Room
+import com.kmp.template.shared.app_name
+import com.kmp.template.shared.room_last_update_format
 import com.kmp.template.ui.composable.AdaptiveDialog
-import kmptemplate.composeapp.generated.resources.Res
-import kmptemplate.composeapp.generated.resources.app_name
-import kmptemplate.composeapp.generated.resources.room_last_update_format
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -64,7 +63,7 @@ fun ListPage(
             TopAppBar(
                 title = {
                     Text(
-                        text = stringResource(Res.string.app_name),
+                        text = stringResource(com.kmp.template.shared.Res.string.app_name),
                         style = MaterialTheme.typography.titleLarge.copy(fontStyle = FontStyle.Italic)
                     )
                 },
@@ -150,7 +149,7 @@ private fun RoomBriefInfoCard(briefInfo: Room, modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = stringResource(
-                        Res.string.room_last_update_format,
+                        com.kmp.template.shared.Res.string.room_last_update_format,
                         briefInfo.updateTime
                     ),
                     style = MaterialTheme.typography.labelSmall

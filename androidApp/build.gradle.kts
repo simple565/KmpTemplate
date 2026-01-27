@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    // alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose.multiplatform)
 }
 
 android {
@@ -36,18 +36,19 @@ android {
 }
 
 dependencies {
-    implementation(projects.composeApp)
+    implementation(projects.shared)
 
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
-    // implementation(libs.androidx.material.icons.core)
-    implementation(libs.androidx.activity.compose)
-    // implementation(libs.androidx.paging.compose.android)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // implementation(libs.androidx.material.icons.core)
+    // implementation(libs.androidx.paging.compose.android)
     // implementation(libs.androidx.navigation3.runtime)
     // implementation(libs.androidx.navigation3.ui)
     // implementation(libs.androidx.lifecycle.viewmodel.navigation3)

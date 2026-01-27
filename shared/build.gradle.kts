@@ -1,18 +1,18 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.androidKmpLibrary)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.android.kmp.library)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
 }
 
 kotlin {
     androidLibrary {
-        namespace = "com.yourcompany.composeapp"
+        namespace = "com.kmp.template.shared"
         compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
 
@@ -31,7 +31,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "shared"
             isStatic = true
         }
     }
@@ -87,7 +87,6 @@ kotlin {
 }
 
 dependencies {
-    // debugImplementation(compose.uiTooling)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosX64", libs.androidx.room.compiler)
@@ -99,14 +98,8 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-/*compose.desktop {
-    application {
-        mainClass = "com.kmp.template.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.kmp.template"
-            packageVersion = "1.0.0"
-        }
-    }
-}*/
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.kmp.template.shared"
+    generateResClass = auto
+}

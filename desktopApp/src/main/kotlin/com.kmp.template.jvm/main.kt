@@ -1,4 +1,4 @@
-package com.kmp.template
+package com.kmp.template.jvm
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.DpSize
