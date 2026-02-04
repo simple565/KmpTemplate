@@ -1,4 +1,4 @@
-package com.kmp.template.di
+package com.kmp.template
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -8,15 +8,16 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-class Factory : IFactory {
-    override fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
-        val dbFilePath = "${documentDirectory()}/${AppDatabase.DB_FILE_NAME}"
+object IosDatabaseFactory {
+
+    fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+        val dbFilePath = "${documentDirectory()}/${AppDatabase.Companion.DB_FILE_NAME}"
         return Room.databaseBuilder<AppDatabase>(name = dbFilePath)
     }
 
     @OptIn(ExperimentalForeignApi::class)
     private fun documentDirectory(): String {
-        val documentDirectory = NSFileManager.defaultManager.URLForDirectory(
+        val documentDirectory = NSFileManager.Companion.defaultManager.URLForDirectory(
             directory = NSDocumentDirectory,
             inDomain = NSUserDomainMask,
             appropriateForURL = null,
@@ -25,8 +26,4 @@ class Factory : IFactory {
         )
         return requireNotNull(documentDirectory?.path)
     }
-}
-
-actual fun getFactory(): IFactory {
-    return Factory()
 }

@@ -7,6 +7,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.kmp.template.di.initKoin
 import com.kmp.template.ui.App
 
 fun main() = application {
@@ -14,6 +15,8 @@ fun main() = application {
         position = WindowPosition.Aligned(alignment = Alignment.Center),
         size = DpSize(1080.dp, 800.dp)
     )
+
+    initKoin()
     
     Window(
         onCloseRequest = ::exitApplication,

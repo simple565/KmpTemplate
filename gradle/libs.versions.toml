@@ -8,22 +8,21 @@ androidx-lifecycle = "2.9.6"
 androidx-navgation = "2.9.1"
 androidx-testExt = "1.3.0"
 androidx-paging = "3.3.6"
-androidx-room = "2.8.3"
-androidx-sqlite = "2.6.1"
-composeBom = "2025.11.00"
+androidx-room = "2.8.4"
+androidx-sqlite = "2.6.2"
+composeBom = "2026.01.00"
 coil = "3.3.0"
-composeHotReload = "1.0.0"
 composeMultiplatform = "1.10.0"
 material3-adaptive = "1.2.0"
 junit = "4.13.2"
 kotlin = "2.3.0"
 kotlinx-coroutines = "1.10.2"
-kotlinx-serialization = "1.9.0"
+kotlinx-serialization = "1.10.0"
+koin = "4.1.1"
 ksp = "2.3.4"
 material3 = "1.9.0"
 materialIconsExtended = "1.7.3"
-ktor = "3.3.3"
-kotlinStdlib = "2.3.0"
+ktor = "3.4.0"
 runner = "1.7.0"
 core = "1.7.0"
 junitVersion = "1.3.0"
@@ -46,7 +45,12 @@ kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+
+# DI
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 
 # Adaptive
 jetbrains-compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "material3-adaptive" }
@@ -58,8 +62,8 @@ jetbrains-compose-material3-adaptive = { module = "org.jetbrains.compose.materia
 jetbrains-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navgation" }
 
 # Image
-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
-coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil"}
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 
 # Network
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

@@ -3,7 +3,7 @@ package com.kmp.template.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kmp.template.database.Room
-import com.kmp.template.di.DbHelper
+import com.kmp.template.database.RoomDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
@@ -13,17 +13,21 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.random.Random
 
 /**
  * @author Lian
  * @date 2025/12/4
  */
-class RoomViewModel : ViewModel() {
+class RoomViewModel : ViewModel(), KoinComponent {
+
+    private val roomDao by inject<RoomDao>()
 
     private val _loadRoomIdState = MutableStateFlow(0)
 
-    val roomList = DbHelper.instance.roomDao().getRoomList()
+    val roomList = roomDao.getRoomList()
         .onCompletion { print("onCompletion: load room list") }
         .stateIn(
             scope = viewModelScope,
@@ -32,7 +36,7 @@ class RoomViewModel : ViewModel() {
         )
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val room = _loadRoomIdState.flatMapLatest { DbHelper.instance.roomDao().getRoom(it) }
+    val room = _loadRoomIdState.flatMapLatest { roomDao.getRoom(it) }
         .onCompletion { print("onCompletion: load room") }
         .stateIn(
             scope = viewModelScope,
@@ -50,7 +54,7 @@ class RoomViewModel : ViewModel() {
             showCalendarView = false,
             updateTime = "",
         )
-        DbHelper.instance.roomDao().insert(room)
+        roomDao.insert(room)
     }
 
     fun loadRoom(id: Int) {

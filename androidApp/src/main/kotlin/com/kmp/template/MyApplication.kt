@@ -1,17 +1,15 @@
 package com.kmp.template
 
 import android.app.Application
-import android.util.Log
+import com.kmp.template.di.initKoin
+import org.koin.android.ext.koin.androidContext
 
 class MyApplication : Application() {
-    companion object Companion {
-        private const val TAG = "MyApplication"
-        lateinit var application: Application
-    }
 
     override fun onCreate() {
-        application = this
         super.onCreate()
-        Log.d(TAG, "onCreate: ")
+        initKoin {
+            androidContext(this@MyApplication)
+        }
     }
 }
