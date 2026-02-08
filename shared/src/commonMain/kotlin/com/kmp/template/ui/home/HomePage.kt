@@ -13,17 +13,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import com.kmp.template.ui.DetailPage
+import androidx.navigation3.runtime.NavKey
 import com.kmp.template.ui.ListPage
 import com.kmp.template.ui.settings.SettingsPage
 import kotlinx.serialization.Serializable
 
 @Serializable
-object HomePage
+object HomePage : NavKey
 
 @Composable
-fun HomePage(navController: NavHostController, modifier: Modifier = Modifier) {
+fun HomePage(onDetailClick: (Int) -> Unit, modifier: Modifier = Modifier) {
     var selectedItem by rememberSaveable { mutableStateOf(0) }
 
     NavigationSuiteScaffold(
@@ -50,7 +49,7 @@ fun HomePage(navController: NavHostController, modifier: Modifier = Modifier) {
     ) {
         when (selectedItem) {
             0 -> ListPage(
-                onDetailClick = { navController.navigate(route = DetailPage(it)) },
+                onDetailClick = onDetailClick,
                 modifier = Modifier.fillMaxSize()
             )
 

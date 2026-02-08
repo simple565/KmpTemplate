@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 /**
@@ -26,7 +27,7 @@ import kotlinx.serialization.Serializable
  * @date 2025/12/3
  */
 @Serializable
-data class DetailPage(val id: Int)
+data class DetailPage(val id: Int): NavKey
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

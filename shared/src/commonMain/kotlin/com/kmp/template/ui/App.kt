@@ -3,32 +3,48 @@ package com.kmp.template.ui
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import androidx.savedstate.serialization.SavedStateConfiguration
 import com.elife.room.ui.theme.AppTheme
 import com.kmp.template.ui.home.HomePage
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+
+private val config = SavedStateConfiguration {
+    serializersModule = SerializersModule {
+        polymorphic(NavKey::class) {
+            subclass(HomePage::class, HomePage.serializer())
+            subclass(DetailPage::class, DetailPage.serializer())
+        }
+    }
+}
 
 @Composable
 fun App() {
-    AppTheme {
-        val navController = rememberNavController()
+    val topLevelBackStack = rememberNavBackStack(config,HomePage)
 
-        NavHost(navController = navController, startDestination = HomePage) {
-            composable<HomePage> {
-                HomePage(
-                    navController = navController,
-                    modifier = Modifier.fillMaxSize()
-                )
+    AppTheme {
+        NavDisplay(
+            backStack = topLevelBackStack,
+            onBack = { topLevelBackStack.removeLastOrNull() },
+            entryProvider = entryProvider {
+                entry<HomePage> {
+                    HomePage(
+                        onDetailClick = { topLevelBackStack.add(DetailPage(it)) },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+                entry<DetailPage> {
+                    DetailPage(
+                        id = it.id,
+                        onBackClick = { topLevelBackStack.removeLastOrNull() },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
-            composable<DetailPage> {
-                DetailPage(
-                    id = it.toRoute<DetailPage>().id,
-                    onBackClick = navController::popBackStack,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-        }
+        )
     }
 }
