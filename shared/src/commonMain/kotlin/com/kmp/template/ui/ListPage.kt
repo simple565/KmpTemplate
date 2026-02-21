@@ -17,28 +17,23 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.kmp.template.database.Room
-import com.kmp.template.shared.app_name
 import com.kmp.template.shared.room_last_update_format
 import com.kmp.template.ui.composable.AdaptiveDialog
 import org.jetbrains.compose.resources.stringResource
@@ -57,33 +52,10 @@ fun ListPage(
     val dataList by viewModel.roomList.collectAsStateWithLifecycle()
     val showBottomSheet = remember { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(com.kmp.template.shared.Res.string.app_name),
-                        style = MaterialTheme.typography.titleLarge.copy(fontStyle = FontStyle.Italic)
-                    )
-                },
-                actions = {
-                    IconButton(
-                        onClick = { showBottomSheet.value = true },
-                        content = {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = null
-                            )
-                        }
-                    )
-                }
-            )
-        }
-    ) { padding ->
+    Column(modifier = modifier) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 140.dp),
-            modifier = Modifier.padding(padding).fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(horizontal = 12.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp, alignment = Alignment.CenterHorizontally),
             verticalArrangement = Arrangement.spacedBy(12.dp)

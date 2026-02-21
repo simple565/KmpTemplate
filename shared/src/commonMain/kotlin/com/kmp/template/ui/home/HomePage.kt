@@ -1,6 +1,7 @@
 package com.kmp.template.ui.home
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
@@ -50,10 +51,12 @@ fun HomePage(onDetailClick: (Int) -> Unit, modifier: Modifier = Modifier) {
         when (selectedItem) {
             0 -> ListPage(
                 onDetailClick = onDetailClick,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().safeContentPadding()
             )
 
-            1 -> SettingsPage()
+            1 -> SettingsPage(
+                modifier = Modifier.fillMaxSize().safeContentPadding()
+            )
         }
     }
 }

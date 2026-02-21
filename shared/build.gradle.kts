@@ -30,7 +30,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "shared"
+            baseName = "Shared"
             isStatic = true
         }
     }
@@ -39,7 +39,6 @@ kotlin {
     
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
             api(libs.koin.android)
@@ -79,7 +78,6 @@ kotlin {
 
             implementation(libs.jetbrains.compose.material3.adaptive)
 
-            // implementation(libs.jetbrains.navigation.compose)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.jetbrains.compose.material3.adaptive.navigation3)
             implementation(libs.jetbrains.lifecycle.viewmodel.navigation3)
@@ -95,6 +93,7 @@ kotlin {
 }
 
 dependencies {
+    androidRuntimeClasspath(libs.compose.ui.tooling)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosArm64", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)

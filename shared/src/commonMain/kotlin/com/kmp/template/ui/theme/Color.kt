@@ -1,4 +1,4 @@
-package com.elife.room.ui.theme
+package com.kmp.template.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF57624D)

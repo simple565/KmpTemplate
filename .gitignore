@@ -10,6 +10,7 @@ gradle-app.setting
 
 # Avoid ignore Gradle wrappper properties
 !gradle-wrapper.properties
+local.properties
 
 # Cache of project
 .gradletasknamecache
