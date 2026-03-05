@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">KmpTemplate</string>
-
+    <string name="nav_home">首页</string>
+    <string name="nav_settings">设置</string>
     <string name="room_last_update_format">最近：%1$s</string>
     <string name="record_item_count_format">%1$d条</string>
+
+    <string name="list_display_mode">列表显示模式</string>
+    <string name="list_display_mode_auto">列表显示模式</string>
+    <string name="list_display_mode_list">列表</string>
+    <string name="list_display_mode_grid">网格</string>
+    <string name="list_display_column_format">%1$d列</string>
 </resources>

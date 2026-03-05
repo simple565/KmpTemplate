@@ -9,7 +9,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -26,12 +28,14 @@ class RoomViewModel : ViewModel(), KoinComponent {
     private val roomDao by inject<RoomDao>()
 
     private val _loadRoomIdState = MutableStateFlow(0)
+    private val _roomListDisplayColumnCount = MutableStateFlow(0)
 
-    val roomList = roomDao.getRoomList()
-        .onCompletion { print("onCompletion: load room list") }
+    val roomList = combine(_roomListDisplayColumnCount, roomDao.getRoomList()) { columnCount, rooms ->
+        DisplayRoomList(columnCount, rooms)
+    }.flowOn(Dispatchers.IO)
         .stateIn(
             scope = viewModelScope,
-            initialValue = emptyList(),
+            initialValue = DisplayRoomList(),
             started = SharingStarted.WhileSubscribed()
         )
 
@@ -60,4 +64,13 @@ class RoomViewModel : ViewModel(), KoinComponent {
     fun loadRoom(id: Int) {
         _loadRoomIdState.value = id
     }
+
+    fun updateRoomListDisplayConfig(columnCount: Int) {
+        _roomListDisplayColumnCount.value = columnCount
+    }
 }
+
+data class DisplayRoomList(
+    val columnCount: Int = 2,
+    val roomList: List<Room> = emptyList()
+)
