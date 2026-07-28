@@ -7,7 +7,7 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.WindowAdaptiveInfo
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.runtime.Composable
@@ -33,16 +33,13 @@ object HomePage : NavKey
 fun HomePage(
     onDetailClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo()
+    windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfoV2()
 ) {
     var selectedItem by rememberSaveable { mutableStateOf(0) }
 
     val navigationItemList = listOf(
         NavigationItem(label = stringResource(Res.string.nav_home), icon = Icons.Rounded.Home),
-        NavigationItem(
-            label = stringResource(Res.string.nav_settings),
-            icon = Icons.Rounded.Settings
-        )
+        NavigationItem(label = stringResource(Res.string.nav_settings), icon = Icons.Rounded.Settings)
     )
 
     NavigationSuiteScaffold(
